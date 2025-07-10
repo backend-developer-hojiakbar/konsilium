@@ -142,7 +142,7 @@ const FinalReportCard: React.FC<{ report: FinalReport }> = ({ report }) => {
                             ))}
                         </ul>
                      ) : <p>Qo'shimcha tekshiruvlar tavsiya etilmagan.</p>}
-                </section>
+                </Section>
             </div>
         </div>
     );
