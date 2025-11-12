@@ -1,0 +1,9 @@
+{
+  "name": "Konsilium ios ko'p tillik",
+  "description": "Murakkab klinik holatlarni tahlil qilish va tashxis qo'yish uchun ilg'or raqamli texnologiyalar asosidagi tibbiy konsilium. Ekspertlar tizimi matnli ma'lumotlar va tibbiy tasvirlarni tahlil qilib, yuqori aniqlikdagi tashxisga erishish uchun munozarani shakllantiradi.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "prompt": ""
+}
