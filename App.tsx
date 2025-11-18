@@ -292,6 +292,8 @@ const AppContent: React.FC = () => {
             setIsProcessing(false);
         }
     };
+    
+    const isAnalysisLayout = appView === 'live_analysis' || appView === 'view_history_item';
 
     const handleTeamConfirmation = async (confirmedTeam: AIModel[]) => {
         if (!patientData) return;
@@ -475,7 +477,7 @@ const AppContent: React.FC = () => {
     if (!currentUser) return <AuthPage onLoginSuccess={handleLoginSuccess} />;
     
     return (
-        <div className="min-h-screen w-full font-sans text-text-primary bg-bg-color pb-24 md:pb-0">
+        <div className={`min-h-screen w-full font-sans text-text-primary bg-bg-color ${isAnalysisLayout ? 'pb-0' : 'pb-24 md:pb-0'}`}>
             {criticalFinding && <CriticalFindingAlert finding={criticalFinding} onClose={() => setCriticalFinding(null)} />}
             {rationaleMessage && <RationaleModal message={rationaleMessage} patientData={patientData!} debateHistory={debateHistory} onClose={() => setRationaleMessage(null)} />}
             
@@ -503,28 +505,30 @@ const AppContent: React.FC = () => {
                 </div>
             </header>
 
-            <main className="container mx-auto px-4 py-6">
+            <main className={`container mx-auto px-4 ${['live_analysis', 'view_history_item'].includes(appView) ? 'h-[calc(100vh-64px)] overflow-hidden py-4 md:py-6' : 'py-6'}`}>
                {renderMainContent()}
             </main>
             
-            <footer className="w-full text-xs text-text-secondary py-5 px-4 mt-12">
-                <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-                    <div className="flex items-center gap-2">
-                        <CopyrightIcon className="w-4 h-4 text-slate-400" />
-                        <span>© {new Date().getFullYear()} {t('appName')}. {t('footer_creator')}:</span>
-                        <span className="font-semibold text-slate-600">CDCgroup</span>
+            {['live_analysis', 'view_history_item'].includes(appView) ? null : (
+                <footer className="w-full text-xs text-text-secondary py-5 px-4 mt-12">
+                    <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+                        <div className="flex items-center gap-2">
+                            <CopyrightIcon className="w-4 h-4 text-slate-400" />
+                            <span> {new Date().getFullYear()} {t('appName')}. {t('footer_creator')}:</span>
+                            <span className="font-semibold text-slate-600">CDCgroup</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <SupportIcon className="w-4 h-4 text-slate-400" />
+                            <span>{t('footer_support')}:</span>
+                            <span className="font-semibold text-slate-600">CraDev Company</span>
+                            <span className="text-slate-300">|</span>
+                            <a href="tel:+998947430912" className="font-semibold text-slate-600 hover:text-accent-color-blue transition-colors flex items-center gap-1">
+                                +998 94 743 09 12
+                            </a>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <SupportIcon className="w-4 h-4 text-slate-400" />
-                        <span>{t('footer_support')}:</span>
-                        <span className="font-semibold text-slate-600">CraDev Company</span>
-                        <span className="text-slate-300">|</span>
-                        <a href="tel:+998947430912" className="font-semibold text-slate-600 hover:text-accent-color-blue transition-colors flex items-center gap-1">
-                            +998 94 743 09 12
-                        </a>
-                    </div>
-                </div>
-            </footer>
+                </footer>
+            )}
             
             <MobileNavBar activeView={appView} onNavigate={handleNavigation as (view: 'dashboard' | 'new_analysis' | 'history' | 'research' | 'tools') => void} />
         </div>
